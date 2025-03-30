@@ -1,42 +1,44 @@
 //Nitipoom Gongfu 6603052421160
 import React, { useRef, useState } from 'react';
 
-export default function Karaoke() {
-    const [total, setTotal] = useState(0);
-    const noCard = useRef();
-    const haveCard = useRef();
-    const noCardRadio = useRef();
-    const haveCardRadio = useRef();
+function Karaoke() {
+    const [totalAmount, setTotalAmount] = useState(0);
+    const noStudentCardHours = useRef();
+    const studentCardHours = useRef();
+    const noStudentCardRadio = useRef();
+    const studentCardRadio = useRef();
 
     const calculateTotal = () => {
-        const noCardHour = noCard.current.value;
-        const haveCardHour = haveCard.current.value;
-        const noCardRate = 120;
-        const haveCardRate = 80;
+        const noCardHoursValue = noStudentCardHours.current.value;
+        const cardHoursValue = studentCardHours.current.value;
+        const noCardRatePerHour = 120;
+        const cardRatePerHour = 80;
         
-        let total = 0;
+        let calculatedTotal = 0;
 
-        if (noCardRadio.current.checked) {
-            if (noCardHour === "") {
+        if (noStudentCardRadio.current.checked) {
+            if (noCardHoursValue === "") {
                 alert("กรุณากรอกจำนวนชั่วโมง");
                 return;
             }
-            total = noCardHour * noCardRate;
+            calculatedTotal = noCardHoursValue * noCardRatePerHour;
 
-        } else if (haveCardRadio.current.checked) {
-            if (haveCardHour === "") {
+        } else if (studentCardRadio.current.checked) {
+            if (cardHoursValue === "") {
                 alert("กรุณากรอกจำนวนชั่วโมง");
                 return;
             }
-            total = haveCardHour * haveCardRate;
+            calculatedTotal = cardHoursValue * cardRatePerHour;
         }
 
-        setTotal(total);
+        setTotalAmount(calculatedTotal);
     };
+
     const borderStyle = {
         border: '2px solid #000000',
         width: '400px',
     };
+
     return (
         <div style={{ marginTop: '10px', marginLeft: '10px' }}>
             <table border="2" style={borderStyle}>
@@ -45,19 +47,22 @@ export default function Karaoke() {
                     <tr>
                         <td>
                             <br />&nbsp;&nbsp;
-                            <input type="radio" name="c1" ref={noCardRadio} /> ไม่มีบัตรนักศึกษา <br />
+                            <input type="radio" name="c1" ref={noStudentCardRadio} /> ไม่มีบัตรนักศึกษา <br />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชั่วโมงละ 120 บาท จำนวน 
-                            <input type="text" size="2" ref={noCard} /> ชั่วโมง <br />
+                            <input type="text" size="2" ref={noStudentCardHours} /> ชั่วโมง <br />
                             &nbsp;&nbsp;
-                            <input type="radio" name="c1" ref={haveCardRadio} /> มีบัตรนักศึกษา <br />
+                            <input type="radio" name="c1" ref={studentCardRadio} /> มีบัตรนักศึกษา <br />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชั่วโมงละ 80 บาท จำนวน 
-                            <input type="text" size="2" ref={haveCard} /> ชั่วโมง <br /><br />
+                            <input type="text" size="2" ref={studentCardHours} /> ชั่วโมง <br /><br />
                         </td>
                     </tr>
                 </tbody>
             </table><br />
             <button onClick={calculateTotal}>คิดเงิน</button><br />
-            รวมเป็นเงินทั้งสิ้น = <input type="text" value={total} readOnly /> บาท
+            รวมเป็นเงินทั้งสิ้น = <input type="text" value={totalAmount} readOnly /> บาท
         </div>
     );
 }
+
+export default Karaoke;
+// <Karaoke />
